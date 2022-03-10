@@ -25,6 +25,9 @@ inputs:
   private:
     description: 'Upload files with private ACL, needed for S3 static website hosting'
     required: false
+  ext:
+    description: 'Enables to set the correct content type header when files has no extension'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
