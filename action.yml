@@ -25,7 +25,7 @@ inputs:
   private:
     description: 'Upload files with private ACL, needed for S3 static website hosting'
     required: false
-  private:
+  ext:
     description: 'Enables to set the correct content type header when files has no extension'
     required: false
 runs:
