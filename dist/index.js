@@ -1042,8 +1042,9 @@ async function run() {
     const deleteRemoved = core.getInput('delete-removed') || false;
     const noCache = getBooleanInput('no-cache');
     const private = getBooleanInput('private');
-
-    await deploy({ folder, bucket, bucketRegion, distId, invalidation, deleteRemoved, noCache, private });
+    const ext = getBooleanInput('ext');
+    
+    await deploy({ folder, bucket, bucketRegion, distId, invalidation, deleteRemoved, noCache, private, ext });
   } catch (error) {
     core.setFailed(error.message);
   }
@@ -1076,7 +1077,7 @@ const exec = __webpack_require__(986);
 
 let deploy = function (params) {
   return new Promise((resolve, reject) => {
-    const { folder, bucket, bucketRegion, distId, invalidation, deleteRemoved, noCache, private } = params;
+    const { folder, bucket, bucketRegion, distId, invalidation, deleteRemoved, noCache, private, ext } = params;
 
     const distIdArg = distId ? `--distId ${distId}` : '';
     const invalidationArg = distId ? `--invalidate "${invalidation}"` : '';
@@ -1088,6 +1089,7 @@ let deploy = function (params) {
         : '';
     const noCacheArg = noCache ? '--noCache' : '';
     const privateArg = private ? '--private' : '';
+    const extArg = ext ? '--ext' : '';
 
     try {
       const command = `npx s3-deploy@1.4.0 ./** \
@@ -1100,7 +1102,8 @@ let deploy = function (params) {
                         ${invalidationArg} \
                         ${deleteRemovedArg} \
                         ${noCacheArg} \
-                        ${privateArg} `;
+                        ${privateArg} \
+                        ${extArg}`;
 
       const cwd = path.resolve(folder);
       exec.exec(command, [], { cwd }).then(resolve).catch(reject);
