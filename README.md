@@ -30,7 +30,7 @@ Input              | Type             | Required | Default      | Description
 | `delete-removed` | boolean / string | No       | false        | Removes files in S3, that are not available in the local copy of the directory 
 | `noCache`        | boolean          | No       | false        | Use this parameter to specify `Cache-Control: no-cache, no-store, must-revalidate` header 
 | `private`        | boolean          | No       | false        | Upload files with private ACL, needed for S3 static website hosting
-
+| `ext`            | boolean          | No       | false        | Enables to set the correct content type header when files has no extension. For example, when the s3 bucket is used for webhosting and there is need to access paths like `/about` instead of `/about.html` so its possible to upload file named `about` and set `--ext html`
 
 ### Example `workflow.yml` with S3 Deploy Action
 
@@ -63,6 +63,7 @@ jobs:
             delete-removed: true
             no-cache: true
             private: true
+            ext: true
 ```
 
 ## License
